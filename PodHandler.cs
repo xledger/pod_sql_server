@@ -76,10 +76,13 @@ namespace pod.xledger.sql_server {
             return s;
         }
 
-          public static JToken ParseJson(string s) {
+        public static JToken ParseJson(string s) {
             var reader = new JsonTextReader(new StringReader(s));
+
+            // We don't need/want NewtonSoft to tamper with our data:
             reader.DateParseHandling = DateParseHandling.None;
             reader.DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind;
+
             return JToken.Load(reader);
         }
 
@@ -197,7 +200,7 @@ namespace pod.xledger.sql_server {
                                     return;
                                 } else {
                                     // @PERF - Think of a way to eliminate deserialize -> serialize for this case
-                                    var obj = JsonConvert.DeserializeObject(sb.ToString());
+                                    var obj = ParseJson(sb.ToString());
                                     results.Add(obj);
                                 }
                             } else {
