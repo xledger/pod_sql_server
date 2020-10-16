@@ -13,9 +13,9 @@
 (require '[pod.xledger.sql-server :as sql])
 
 (sql/execute! {
-   "connection-string" "Data Source=my.db.host;Application Name=my.script;Initial Catalog=my_db_name;Integrated Security=True" 
-   "command-text" "select top 1 * from sys.objects"
-   "multi-rs" true  ;; Return multiple result sets, or just the first?
+   :connection-string "Data Source=my.db.host;Application Name=my.script;Initial Catalog=my_db_name;Integrated Security=True" 
+   :command-text "select top 1 * from sys.objects"
+   :multi-rs true  ;; Return multiple result sets, or just the first?
    })
 
 => [[{:is_schema_published false, :object_id 3, :type_desc "SYSTEM_TABLE", :modify_date "2014-02-20T20:48:35.277", :name "sysrscols", :create_date "2014-02-20T20:48:35.27", :parent_object_id 0, :principal_id nil, :type "S ", :is_ms_shipped true, :is_published false, :schema_id 4}]]
@@ -23,17 +23,17 @@
 ;; When you expect only 1 row:
 
 (sql/execute-one! {
-   "connection-string" "Data Source=my.db.host;Application Name=my.script;Initial Catalog=my_db_name;Integrated Security=True"
-   "command-text" "select top 1 * from sys.objects where object_id = @object_id"
-   "parameters" {:object_id 3}})
+   :connection-string "Data Source=my.db.host;Application Name=my.script;Initial Catalog=my_db_name;Integrated Security=True"
+   :command-text "select top 1 * from sys.objects where object_id = @object_id"
+   :parameters {:object_id 3}})
 
 => {:is_schema_published false, :object_id 3, :type_desc "SYSTEM_TABLE", :modify_date "2014-02-20T20:48:35.277", :name "sysrscols", :create_date "2014-02-20T20:48:35.27", :parent_object_id 0, :principal_id nil, :type "S ", :is_ms_shipped true, :is_published false, :schema_id 4}
 
 ;; JSON output support (FOR JSON PATH)
 
 (sql/execute! {
-   "connection-string" "Data Source=my.db.host;Application Name=my.script;Initial Catalog=my_db_name;Integrated Security=True"
-   "command-text" "
+   :connection-string "Data Source=my.db.host;Application Name=my.script;Initial Catalog=my_db_name;Integrated Security=True"
+   :command-text "
 declare @People as table (
     id int primary key,
     [name] nvarchar(255),
