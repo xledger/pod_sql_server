@@ -9,6 +9,8 @@
 
 ;; After compiling this solution with Visual Studio:
 (pods/load-pod "C:/src/pod_sql_server/bin/Debug/netcoreapp3.1/pod.xledger.sql_server.exe")
+;; or, if you are not on Windows:
+(pods/load-pod ["dotnet" "bin/Debug/netcoreapp3.1/pod.xledger.sql_server.dll"])
 
 (require '[pod.xledger.sql-server :as sql])
 
