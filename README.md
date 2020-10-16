@@ -15,7 +15,6 @@
 (sql/execute! {
    "connection-string" "Data Source=my.db.host;Application Name=my.script;Initial Catalog=my_db_name;Integrated Security=True" 
    "command-text" "select top 1 * from sys.objects"
-   "parameters" {:r_ui 49}
    "multi-rs" true  ;; Return multiple result sets, or just the first?
    })
 
