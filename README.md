@@ -58,6 +58,52 @@ for json path"})
      :children [{:id 3, :name "Jack", :dad_id 2} {:id 4, :name "Jill", :dad_id 2}]}]
 ```
 
+## Running with .NET Core
+
+This pod can be used with [.NET Core](https://dotnet.microsoft.com/download) and was tested on macOS as follows:
+
+- Clone repo. Compile with `dotnet build`.
+- Start SQL Server in a Docker container:
+
+  ``` clojure
+  $ docker run --rm -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrongPassword1234' -e 'MSSQL_PID=Express' -p 1433:1433 mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+  ```
+
+- Execute the following babashka script:
+
+``` clojure
+(require '[babashka.pods :as pods]
+         '[clojure.pprint :refer [pprint]])
+
+(def pod (pods/load-pod ["dotnet" "bin/Debug/netcoreapp3.1/pod.xledger.sql_server.dll"]))
+
+(require '[pod.xledger.sql-server :as sql])
+
+(pprint
+ (sql/execute! {:connection-string "Server=localhost;User Id=SA;Password=yourStrongPassword1234;"
+                :command-text "select top 10 name from sys.objects"
+                :multi-rs true
+                }))
+
+;; Required with babashka <= 0.2.2 to kill dotnet process
+(pods/unload-pod (:pod/id pod))
+```
+
+This will print:
+
+``` clojure
+[[{:name "sysrscols"}
+  {:name "sysrowsets"}
+  {:name "sysclones"}
+  {:name "sysallocunits"}
+  {:name "sysfiles1"}
+  {:name "sysseobjvalues"}
+  {:name "sysmatrixages"}
+  {:name "syspriorities"}
+  {:name "sysdbfrag"}
+  {:name "sysfgfrag"}]]
+```
+
 ## Design issues:
 
 ### Why not copy the jdbc API more closely?
