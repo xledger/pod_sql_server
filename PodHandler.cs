@@ -165,6 +165,25 @@ namespace pod.xledger.sql_server {
                     await conn.OpenAsync();
                     cmd.CommandText = commandText;
 
+                    if (argMap.TryGetValue("command-type", out JToken commandTypeTok) 
+                        && commandTypeTok.Type != JTokenType.Null) {
+                        if (commandTypeTok.Type != JTokenType.String) {
+                            await SendException(id, $"Expected string. Failing key: \"$.command-type\"");
+                            return;
+                        }
+                        var commandType = commandTypeTok.Value<string>();
+                        switch (commandType) {
+                            case "stored-procedure":
+                                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                                break;
+                            case "text":
+                                break; // This is the default
+                            default:
+                                await SendException(id, $"Expected \"stored-procedure\" | \"text\". Failing key: \"$.command-type\"");
+                                return;
+                        }
+                    }
+
                     if (argMap.TryGetValue("parameters", out JToken paramTok)
                         && paramTok is JObject paramObj) {
                         foreach (var item in paramObj) {
