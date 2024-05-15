@@ -1,6 +1,6 @@
  # pod.xledger.sql-server
 
- ![NuGet Version](https://img.shields.io/nuget/v/pod.xledger.sql-server)
+ [![NuGet version (pod.xledger.sql-server)](https://img.shields.io/nuget/v/pod.xledger.sql_server.svg?style=flat-square)](https://www.nuget.org/packages/pod.xledger.sql_server/)
 
 [babashka](https://github.com/borkdude/babashka) [pod](https://github.com/babashka/babashka.pods) for SQL Server. If you are scripting with babashka, and need to talk to SQL Server via Integrated Authentication, this pod is for you.
 
