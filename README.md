@@ -2,17 +2,27 @@
 
  ![NuGet Version](https://img.shields.io/nuget/v/pod.xledger.sql-server)
 
-[babashka](https://github.com/borkdude/babashka) [pod](https://github.com/babashka/babashka.pods) for SQL Server.
+[babashka](https://github.com/borkdude/babashka) [pod](https://github.com/babashka/babashka.pods) for SQL Server. If you are scripting with babashka, and need to talk to SQL Server via Integrated Authentication, this pod is for you.
+
+
+## Installation
+
+1. Make sure you have `dotnet` installed: https://dotnet.microsoft.com/en-us/download
+2. Install this project as a dotnet tool. Either:
+  - Globally (easiest): `dotnet tool install --global pod.xledger.sql_server`
+  - Locally:
+    1. Create a tool manifest: `dotnet new tool-manifest`
+    2. Install this project as a local tool: `dotnet tool install pod.xledger.sql_server`
 
 ## Usage
 
 ```clojure
 (require '[babashka.pods :as pods])
 
-;; After compiling this solution with Visual Studio:
-(pods/load-pod "C:/src/pod_sql_server/bin/Debug/net5.0/pod.xledger.sql_server.exe")
-;; or, if you are not on Windows:
-(pods/load-pod ["dotnet" "bin/Debug/net5.0/pod.xledger.sql_server.dll"])
+;; If you installed the tool globally:
+(pods/load-pod ["pod_xledger_sql_server"])
+;; If you installed it locally:
+;; (pods/load-pod ["dotnet" "tool" "run" "pod_xledger_sql_server"])
 
 (require '[pod.xledger.sql-server :as sql])
 
@@ -79,7 +89,7 @@ This pod can be used with [.NET Core](https://dotnet.microsoft.com/download) and
 (require '[babashka.pods :as pods]
          '[clojure.pprint :refer [pprint]])
 
-(def pod (pods/load-pod ["dotnet" "bin/Debug/netcoreapp3.1/pod.xledger.sql_server.dll"]))
+(def pod (pods/load-pod ["pod_xledger_sql_server"]))
 
 (require '[pod.xledger.sql-server :as sql])
 
