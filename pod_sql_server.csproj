@@ -2,15 +2,37 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>pod.xledger.sql_server</RootNamespace>
     <AssemblyName>pod.xledger.sql_server</AssemblyName>
+    <RepositoryUrl>https://github.com/xledger/pod_sql_server/</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/xledger/pod_sql_server/</PackageProjectUrl>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>pod_xledger_sql_server</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git@github.com:xledger/pod_sql_server.git</RepositoryUrl>
+    <PackageTags>sql server; clojure</PackageTags>
+    <PackAsTool>True</PackAsTool>
+    <Description>A babashka/clojure pod for talking to SQL Server.</Description>
+    <Version>$(VersionPrefix)</Version>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BencodeNET" Version="3.1.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="BencodeNET" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
