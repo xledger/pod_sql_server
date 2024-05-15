@@ -1,6 +1,6 @@
-[![NuGet version (pod.xledger.sql-server)](https://img.shields.io/nuget/v/pod.xledger.sql-server.svg?style=flat-square)](https://www.nuget.org/packages/pod.xledger.sql-server/)
- 
  # pod.xledger.sql-server
+
+ ![NuGet Version](https://img.shields.io/nuget/v/pod.xledger.sql-server)
 
 [babashka](https://github.com/borkdude/babashka) [pod](https://github.com/babashka/babashka.pods) for SQL Server.
 
