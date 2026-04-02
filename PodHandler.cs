@@ -275,6 +275,9 @@ namespace pod.xledger.sql_server {
                 for (int j = 0; j < resultSet.columns.Length; j++) {
                     var k = resultSet.columns[j];
                     var v = resultSet.rows[i][j];
+                    if (Convert.IsDBNull(v)) {
+                        v = null;
+                    }
                     d[k] = v;
                 }
             }
