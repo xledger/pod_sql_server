@@ -37,7 +37,7 @@ namespace pod.xledger.sql_server {
                         var s = ((BString)op).ToString();
                         await HandleMessage(s, msg, cts);
                     }
-                } catch(BencodeNET.Exceptions.BencodeException ex) when /* HACK */ (ex.Message.Contains("but reached end of stream")) {
+                } catch (BencodeNET.Exceptions.BencodeException ex) when /* HACK */ (ex.Message.Contains("but reached end of stream")) {
                     // ^ This message filter appears to be the only way to check if the stream is closed, because
                     // the BencodeNET does not expose an inner exception, specific code, etc when the stream closes.
                     await SendException(null, "Reached end of stream");
@@ -80,8 +80,10 @@ namespace pod.xledger.sql_server {
             }
         }
 
+        static readonly SqlTypesJsonConverter _sqlTypesConverter = new SqlTypesJsonConverter();
+
         public static string JSON(object o) {
-            var s = JsonConvert.SerializeObject(o);
+            var s = JsonConvert.SerializeObject(o, _sqlTypesConverter);
             return s;
         }
 
@@ -174,7 +176,7 @@ namespace pod.xledger.sql_server {
                     await conn.OpenAsync();
                     cmd.CommandText = commandText;
 
-                    if (argMap.TryGetValue("command-type", out JToken commandTypeTok) 
+                    if (argMap.TryGetValue("command-type", out JToken commandTypeTok)
                         && commandTypeTok.Type != JTokenType.Null) {
                         if (commandTypeTok.Type != JTokenType.String) {
                             await SendException(id, $"Expected string. Failing key: \"$.command-type\"");
